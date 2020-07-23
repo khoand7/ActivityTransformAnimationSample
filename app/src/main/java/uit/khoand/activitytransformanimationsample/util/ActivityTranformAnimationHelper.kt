@@ -3,11 +3,14 @@ package uit.khoand.activitytransformanimationsample.util
 import android.app.Activity
 import android.content.Intent
 import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.graphics.Rect
 import android.os.Build
 import android.os.Handler
 import android.view.PixelCopy
 import android.view.View
+import android.widget.ImageView
+import uit.khoand.activitytransformanimationsample.R
 import java.io.ByteArrayOutputStream
 
 open class ActivityTranformAnimationHelper {
@@ -42,6 +45,14 @@ open class ActivityTranformAnimationHelper {
                 srcActivity.overridePendingTransition(0, 0)
             }
         }
+    }
+
+    fun receiveTransitionEffect(dstActivity: Activity, intent: Intent) {
+        val bs: ByteArray = intent.getByteArrayExtra(ActivityTranformAnimationHelper.BITMAP_KEY)
+        val startUpBitmap = BitmapFactory.decodeByteArray(bs, 0, bs.size)
+        val transImage: ImageView = dstActivity.findViewById(R.id.trans_image)
+        transImage.setImageBitmap(startUpBitmap)
+        transImage.visibility = View.VISIBLE
     }
 
     protected fun getScreenShotFromView(view: View, activity: Activity, callback: (Bitmap) -> Unit) {
